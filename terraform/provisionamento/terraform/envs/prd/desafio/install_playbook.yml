@@ -1,0 +1,11 @@
+---
+- name: Install basic
+  hosts: "{{ desafio_hosts }}"
+  become: yes
+
+  roles:
+    - docker
+
+  tasks:
+    - name: apache container
+      command: docker run -d --name apache -p 80:80 httpd
