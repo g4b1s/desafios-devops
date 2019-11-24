@@ -1,32 +1,62 @@
-# Desafios IDwall
+# Como usar Terraform
 
-Aqui estão os desafios para a primeira fase de testes de candidatos da IDwall para às vagas de **Site Reliability Engineer / DevOps**.
+## pré-requisitos local:
+Voce precida ter instalado:
+1. awscli
+2. python
+3. ansible
+4. terraform
 
-1. [Terraform/IaC](https://github.com/idwall/desafios-devops/tree/master/terraform)
-2. [Kubernetes](https://github.com/idwall/desafios-devops/tree/master/kubernetes)
+## pré-requisitos aws:
+1. Voce precisa gerar uma ssh-key-pair, use o "chave"
+[Tutorial aqui](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
+2. Voce precisa de uma access-key e uam secret-key
+[Tutorial aqui](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/)
 
-Não há diferença de testes para diferentes níveis de profissionais, porém ambos os testes serão avaliados com diferentes critérios, dependendo do perfil da vaga.
+## executando
+1. cole uma cópia da chave ssh chave.pem [Neste diretório](desafios-devops/terraform/provisionamento/terraform/envs/prd/desafio)
+2. entre na pasta
 
-Vale reforçar, que a solução deve contemplar os testes de **Terraform/IaC** e **Kubernetes**.
+```bash
+cd esafios-devops/terraform/provisionamento/terraform/envs/prd/desafio
+```
+
+```bash
+terraform init
+terraform plan
+terraform apply
+```
+
+neste ponto será perguntado a região da aws em que será criada a máquina e o ip para acesso ssh.
+
+após a execução será exibido o ip para acesssar o apache via navegador
 
 
-## Como entregar estes desafios
-Você deve realizar o _**fork**_ este projeto e fazer o **_push_** no seu próprio repositório e enviar o link como resposta ao recrutador que lhe enviou o teste, junto com seu LinkedIn atualizado.
+----
 
-A implementação deve ficar na pasta correspondente ao desafio. Fique à vontade para adicionar qualquer tipo de conteúdo que julgue útil ao projeto, alterar/acrescentar um README com instruções de como executá-lo, etc.
+# Desafio 01: Infrastructure-as-code - Terraform
 
-**Obs.**:
-- Você não deve fazer um Pull Request para este projeto!
+## Motivação
 
-### Extras
+Recursos de infraestrutura em nubvem devem sempre ser criados utilizando gerenciadores de configuração, tais como [Cloudformation](https://aws.amazon.com/cloudformation/), [Terraform](https://www.terraform.io/) ou [Ansible](https://www.ansible.com/), garantindo que todo recurso possa ser versionado e recriado de forma facilitada.
 
-- Descreva o processo de resolução dos desafios;
-- Descreva como utilizar a sua solução;
-- Sempre considerar melhores práticas como se fosse um ambiente de produção;
+## Objetivo
+
+- Criar uma instância **n1-standard-1** (GCP) ou **t2.micro** (AWS) Linux utilizando **Terraform**.
+- A instância deve ter aberta somente às portas **80** e **443** para todos os endereços
+- A porta SSH (**22**) deve estar acessível somente para um _range_ IP definido.
+- **Inputs:** A execução do projeto deve aceitar dois parâmetros:
+  - O IP ou _range_ necessário para a liberação da porta SSH
+  - A região da _cloud_ em que será provisionada a instância
+- **Outputs:** A execução deve imprimir o IP público da instância
 
 
-## Carreira IDwall
+## Extras
 
-Caso queira mais detalhes de como trabalhamos, quais são nossos valores e ideais, confira a página [Carreira IDwall](https://idwall.co/carreira) e mesmo que seu perfil não esteja listado nas vagas em aberto, lhe encorajamos a mandar seu CV para jobs@idwall.co! Valorizamos bons profissionais sempre e gostamos de manter contato com gente boa.
+- Pré-instalar o docker na instância que suba automáticamente a imagem do [Apache](https://hub.docker.com/_/httpd/), tornando a página padrão da ferramenta visualizável ao acessar o IP público da instância
+- Utilização de módulos do Terraform
 
-Boas implementações! 
+## Notas
+- Pode se utilizar tanto AWS quanto GCP (Google Cloud), não é preciso executar o teste em ambas, somente uma.
+- Todos os recursos devem ser criados utilizando os créditos gratuitos da AWS/GCP.
+- Não esquecer de destruir os recursos após criação e testes do desafio para não haver cobranças ou esgotamento dos créditos.
